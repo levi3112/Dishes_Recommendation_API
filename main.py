@@ -5,7 +5,14 @@ from uuid import UUID, uuid4
 
 import pandas as pd
 import pulp as pl
+import os
+
 app = FastAPI()
+
+# Get the path to the directory containing this script
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# Construct the path to the CSV file
+CSV_PATH = os.path.join(BASE_DIR, 'recommendation_system', 'df_p2.csv')
 
 class NutrientConfig(BaseModel):
     cal_lo: int = 2000  # Default value
@@ -55,7 +62,7 @@ def recipe_recommend(df, number_of_dishes, number_of_candidates, nut_conf):
     return candidates_list
 
 # Load the DataFrame (df_p2)
-df_p2 = pd.read_csv('/workspaces/Dishes_Recommendation_API/recommendation_system/df_p2.csv')  # Adjust the path to your actual CSV file
+df_p2 = pd.read_csv(CSV_PATH)  # Adjust the path to your actual CSV file
 
 @app.get('/recommend')
 def recommend(
