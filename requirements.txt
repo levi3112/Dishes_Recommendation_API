@@ -1,3 +1,5 @@
 pydantic
 uvicorn
 fastapi
+pulp
+pandas
