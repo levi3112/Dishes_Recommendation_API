@@ -64,7 +64,7 @@ def recipe_recommend(df, number_of_dishes, number_of_candidates, nut_conf):
 # Load the DataFrame (df_p2)
 df_p2 = pd.read_csv(CSV_PATH)  # Adjust the path to your actual CSV file
 
-@app.get('/recommend')
+@app.post('/recommend')
 def recommend(
     request: RecipeRequest = RecipeRequest(),
     season: str = Query("summer", description="Filter by season (summer, winter)"),
