@@ -31,9 +31,9 @@ class RecipeRequest(BaseModel):
 
 class PersonalInformation(BaseModel):
     number_of_dishes: int = 5
-    number_of_candidates: int =10
+    number_of_candidates: int = 10
     current_weight: int = 60
-    desired_weight: int =65
+    desired_weight: int = 65
     height: int = 175
     age: int = 22
     gender: str = 'Male'
@@ -139,7 +139,7 @@ def recommend(
         calorie_change_per_day = 1500  # Nếu muốn giảm cân, đặt giá trị dương cho thiếu hụt calo; nếu tăng cân thì đặt giá trị thặng dư calo
 
         # Tính thời gian để đạt mục tiêu
-        days_to_goal = calculate_time_to_goal(current_weight, desired_weight, calorie_change_per_day)
+        days_to_goal = calculate_time_to_goal(request.current_weight, request.desired_weight, calorie_change_per_day)
 
         # Tính lượng calo tối thiểu và tối đa cần tiêu thụ mỗi ngày
         min_calories, max_calories = calculate_calorie_range(tdee, calorie_change_per_day)
