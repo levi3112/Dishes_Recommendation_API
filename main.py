@@ -64,8 +64,8 @@ def calculate_time_to_goal(current_weight, desired_weight, calorie_change_per_da
 
 def calculate_calorie_range(tdee, calorie_change_per_day):
     # Tính lượng calo tối thiểu và tối đa cần tiêu thụ mỗi ngày
-    min_calories = tdee - calorie_change_per_day  # Thâm hụt calo (giảm cân)
-    max_calories = tdee + calorie_change_per_day  # Thặng dư calo (tăng cân)
+    min_calories = int(tdee - calorie_change_per_day)  # Thâm hụt calo (giảm cân)
+    max_calories = int (tdee + calorie_change_per_day)  # Thặng dư calo (tăng cân)
     return min_calories, max_calories
 
 
@@ -130,7 +130,8 @@ def recommend(
 
         if quick_recipe:
             df_filtered = df_filtered.query("len_ingredients <= 9 and len_directions <= 3")
-
+        #log request
+        print(f"request: {request.dict()}" )
         # Tính BMR và TDEE dựa trên cân nặng hiện tại
         bmr = calculate_bmr(request.current_weight, request.height, request.age, request.gender)
         tdee = calculate_tdee(bmr, request.activity_level)
