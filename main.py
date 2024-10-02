@@ -96,7 +96,8 @@ def recipe_recommend(df, number_of_dishes, number_of_candidates, nut_conf):
 
         if m.status == 1:
             tmp['val'] = tmp["v"].apply(lambda x: pl.value(x))
-            ret = tmp.query('val==1')["title"].values
+            # ret = tmp.query('val==1')["title"].values
+            ret = tmp.query('val==1').to_dict(orient='records') 
             candidates_list.append(ret)
             tmp = tmp.query('val==0')
 
