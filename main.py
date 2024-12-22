@@ -6,7 +6,7 @@ from uuid import UUID, uuid4
 import pandas as pd
 import pulp as pl
 import os
-
+import numpy as np
 app = FastAPI()
 
 # Get the path to the directory containing this script
@@ -97,14 +97,17 @@ def recipe_recommend(df, number_of_dishes, number_of_candidates, nut_conf):
         if m.status == 1:
             tmp['val'] = tmp["v"].apply(lambda x: pl.value(x))
             # ret = tmp.query('val==1')["title"].values
+             # Fix: Replace nan in 'image' field with an empty string
+            tmp.loc[tmp['val'] == 1] = tmp.loc[tmp['val'] == 1].fillna("")
             ret = tmp.query('val==1').to_dict(orient='records') 
+            print(f"ret: {ret }" )
             candidates_list.append(ret)
             tmp = tmp.query('val==0')
 
     return candidates_list
 
 # Load the DataFrame (df_p2)
-df_p2 = pd.read_csv(CSV_PATH)  # Adjust the path to your actual CSV file
+df_p2 = pd.read_csv(CSV_PATH, encoding='latin-1')  # Adjust the path to your actual CSV file
 
 @app.post('/recommend')
 def recommend(
